@@ -18,6 +18,8 @@ int main(int argc, char **argv)
 	FILE *f;
 	char *line = malloc(sizeof(char) * 1024);
 	char *token;
+	int line_number = 1;
+	int operand;
 
 	(void)argc;
 
@@ -44,13 +46,21 @@ int main(int argc, char **argv)
 		{
 			if (strcmp(token, "push") == 0)
 			{
-				push(atoi(strtok(NULL, " ")), &mystack);
+				operand = atoi(strtok(NULL, " "));
+				if (operand == 0)
+				{
+					fprintf(stderr, "L<%d>: usage: push integer", line_number);
+					return (EXIT_FAILURE);
+				}
+				push(operand, &mystack);
 			}
 			else if (strcmp(token, "pall"))
 			{
 				pall(mystack);
 			}
 		}
+
+		line_number += 1;
 	}
 
 	return (0);
