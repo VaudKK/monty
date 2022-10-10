@@ -16,11 +16,8 @@ int main(int argc, char **argv)
 {
 	stack_t *mystack = NULL;
 	FILE *f;
-	char *line = malloc(sizeof(char) * 1024);
-	char *token;
-	int line_number = 1;
-	int operand;
-
+	char *token, *line = malloc(sizeof(char) * 1024);
+	int operand, line_number = 1;
 	(void)argc;
 
 	if (argv[1] == NULL)
@@ -29,7 +26,6 @@ int main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	}
 
-
 	f = fopen(argv[1], "r");
 	if (f == NULL)
 	{
@@ -37,11 +33,9 @@ int main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	}
 
-
 	while (fgets(line, 1024, f) != NULL)
 	{
 		token = strtok(line, " ");
-
 		if (token != NULL)
 		{
 			if (strcmp(token, "push") == 0)
@@ -49,7 +43,7 @@ int main(int argc, char **argv)
 				operand = atoi(strtok(NULL, " "));
 				if (operand == 0)
 				{
-					fprintf(stderr, "L<%d>: usage: push integer", line_number);
+					fprintf(stderr, "L%d: usage: push integer", line_number);
 					return (EXIT_FAILURE);
 				}
 				push(operand, &mystack);
@@ -59,9 +53,7 @@ int main(int argc, char **argv)
 				pall(mystack);
 			}
 		}
-
 		line_number += 1;
 	}
-
 	return (0);
 }
